@@ -8,257 +8,253 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #1a1008;
-  --surface: rgba(255,200,120,0.07);
-  --surface-hover: rgba(255,200,120,0.13);
-  --border: rgba(255,180,80,0.15);
-  --border-hover: rgba(255,150,50,0.45);
-  --accent: #FF9940;
-  --accent2: #FFD08A;
-  --text: #F5ECD7;
-  --text-dim: #B09070;
-  --text-muted: #6B5035;
-  --glow: rgba(255,140,50,0.18);
-  --radius: 18px;
-  --radius-sm: 12px;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+  :root {
+    --bg: #1a1208;
+    --surface: rgba(255,220,160,0.06);
+    --surface-hover: rgba(255,220,160,0.11);
+    --border: rgba(255,200,120,0.12);
+    --border-hover: rgba(255,160,60,0.45);
+    --accent: #FF9A3C;
+    --accent2: #FFCE7A;
+    --text: #F5ECD7;
+    --text-dim: #A89070;
+    --text-muted: #6B5540;
+    --glow: rgba(255,154,60,0.15);
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-/* 발바닥 파티클 캔버스 */
-canvas#paws {
-  position: fixed; top:0; left:0;
-  width:100%; height:100%;
-  pointer-events:none; z-index:0;
-  opacity: 0.18;
-}
+  /* 파티클 캔버스 */
+  canvas#paws {
+    position: fixed; top:0; left:0;
+    width:100%; height:100%;
+    z-index:0; pointer-events:none;
+    opacity: 0.18;
+  }
 
-.wrap {
-  position: relative; z-index:1;
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 16px 80px;
-}
+  .wrap {
+    position: relative; z-index:1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px 80px;
+  }
 
-/* ── NAV ── */
-nav {
-  position: sticky; top:0; z-index:10;
-  display: flex; align-items:center; justify-content:center;
-  padding: 14px 20px;
-  background: rgba(26,16,8,0.88);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-brand {
-  font-family: 'Gamja Flower', sans-serif;
-  font-size: 1.4rem;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-}
+  /* NAV */
+  nav {
+    display: flex; align-items: center; justify-content: center;
+    padding: 18px 0;
+    position: sticky; top:0; z-index:10;
+    background: rgba(26,18,8,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand {
+    font-family: 'Gamja Flower', sans-serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
 
-/* ── HERO ── */
-.hero {
-  text-align: center;
-  padding: 52px 0 36px;
-}
-.hero-emoji {
-  font-size: 5rem;
-  display: block;
-  margin-bottom: 16px;
-  animation: float 3s ease-in-out infinite;
-}
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-10px); }
-}
-.hero h1 {
-  font-family: 'Gamja Flower', sans-serif;
-  font-size: 2.4rem;
-  color: var(--accent2);
-  line-height: 1.3;
-  margin-bottom: 10px;
-}
-.hero .sub {
-  color: var(--text-dim);
-  font-size: 0.9rem;
-}
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 56px 0 36px;
+  }
+  .hero-emoji {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+  }
+  .hero h1 {
+    font-family: 'Gamja Flower', sans-serif;
+    font-size: 2.4rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
 
-/* ── SECTION HEAD ── */
-.sec { margin-top: 40px; }
-.sec-head {
-  display: flex; align-items:center; gap:8px;
-  margin-bottom: 16px;
-}
-.sec-head h2 {
-  font-family: 'Gamja Flower', sans-serif;
-  font-size: 1.3rem;
-  color: var(--text);
-}
+  /* SECTION */
+  .section { margin-top: 44px; }
+  .section-title {
+    font-family: 'Gamja Flower', sans-serif;
+    font-size: 1.3rem;
+    color: var(--accent2);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
 
-/* ── PROFILE CARD ── */
-.profile-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-.profile-item { display:flex; flex-direction:column; gap:4px; }
-.profile-label {
-  font-size: 0.7rem; font-weight:700;
-  color: var(--text-muted); text-transform:uppercase; letter-spacing:0.08em;
-}
-.profile-value {
-  font-size: 0.92rem; font-weight:600;
-  color: var(--text);
-}
-.profile-item.full { grid-column: 1/-1; }
+  /* PROFILE CARD */
+  .profile-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .profile-item {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .profile-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .profile-value {
+    font-size: 0.92rem;
+    color: var(--text);
+    font-weight: 600;
+  }
 
-/* ── GALLERY ── */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-.gallery-item {
-  aspect-ratio: 1;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  display: flex; align-items:center; justify-content:center;
-  flex-direction:column; gap:6px;
-  cursor: pointer;
-  transition: all 0.25s;
-  overflow: hidden;
-  position: relative;
-}
-.gallery-item:hover {
-  border-color: var(--border-hover);
-  background: var(--surface-hover);
-  transform: scale(1.02);
-}
-.gallery-item img {
-  width:100%; height:100%;
-  object-fit:cover;
-  border-radius: calc(var(--radius-sm) - 1px);
-}
-.gallery-placeholder {
-  font-size: 2rem;
-  opacity: 0.5;
-}
-.gallery-placeholder-text {
-  font-size: 0.68rem;
-  color: var(--text-muted);
-}
-.gallery-zoom-hint {
-  position:absolute; inset:0;
-  background: rgba(255,153,64,0.0);
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.4rem; opacity:0;
-  transition: all 0.2s;
-  border-radius: calc(var(--radius-sm) - 1px);
-}
-.gallery-item:hover .gallery-zoom-hint { opacity:1; background: rgba(26,16,8,0.45); }
+  /* GALLERY */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .gallery-item {
+    aspect-ratio: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.25s;
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+  }
+  .gallery-item:hover {
+    border-color: var(--border-hover);
+    background: var(--surface-hover);
+    transform: scale(1.02);
+    box-shadow: 0 6px 24px var(--glow);
+  }
+  .gallery-placeholder {
+    font-size: 2rem;
+    pointer-events: none;
+  }
+  .gallery-placeholder-text {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
 
-/* ── GUESTBOOK ── */
-.guestbook-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  text-align: center;
-}
-.guestbook-box p {
-  color: var(--text-dim);
-  font-size: 0.88rem;
-  margin-bottom: 16px;
-  line-height: 1.7;
-}
-.btn {
-  display: inline-block;
-  padding: 10px 24px;
-  background: linear-gradient(135deg, var(--accent), #E07820);
-  color: #fff;
-  border-radius: 10px;
-  font-size: 0.85rem; font-weight:700;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-.btn:hover { opacity:0.85; }
+  /* GUESTBOOK */
+  .guestbook-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+  }
+  .guestbook-box p {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, var(--accent), #e07820);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none; cursor: pointer;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--glow); }
 
-/* ── FOOTER ── */
-footer {
-  text-align:center;
-  margin-top:52px; padding-top:20px;
-  border-top: 1px solid var(--border);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
+  /* FOOTER */
+  footer {
+    text-align: center;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
 
-/* ── LIGHTBOX ── */
-#lb-overlay {
-  display:none;
-  position:fixed; inset:0;
-  background: rgba(0,0,0,0.88);
-  z-index:1000;
-  align-items:center; justify-content:center;
-}
-#lb-overlay.active { display:flex; }
-#lb-img {
-  max-width:90vw; max-height:85vh;
-  border-radius: 12px;
-  object-fit: contain;
-  box-shadow: 0 20px 80px rgba(0,0,0,0.7);
-}
-.lb-placeholder {
-  width:320px; height:320px;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:12px;
-  background: var(--surface);
-  border-radius:12px;
-  font-size:3rem;
-  color: var(--text-dim);
-}
-.lb-placeholder span { font-size:0.9rem; }
-#lb-close {
-  position:absolute; top:20px; right:24px;
-  background:none; border:none;
-  color:#fff; font-size:2rem; cursor:pointer;
-  opacity:0.7; transition:opacity 0.2s;
-}
-#lb-close:hover { opacity:1; }
-#lb-prev, #lb-next {
-  position:absolute; top:50%; transform:translateY(-50%);
-  background: rgba(255,255,255,0.12);
-  border:none; color:#fff;
-  font-size:1.8rem; cursor:pointer;
-  width:48px; height:48px;
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  transition: background 0.2s;
-}
-#lb-prev { left:20px; }
-#lb-next { right:20px; }
-#lb-prev:hover, #lb-next:hover { background: rgba(255,255,255,0.25); }
-#lb-counter {
-  position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
-  color:rgba(255,255,255,0.5); font-size:0.78rem;
-}
+  /* ── LIGHTBOX ── */
+  #lb-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.9);
+    align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  #lb-overlay.open { display: flex; }
+  #lb-img {
+    max-width: 90vw; max-height: 80vh;
+    border-radius: 12px;
+    object-fit: contain;
+    user-select: none;
+  }
+  #lb-close {
+    position: absolute; top: 20px; right: 24px;
+    background: rgba(255,255,255,0.1);
+    border: none; color: #fff;
+    font-size: 1.6rem; width: 44px; height: 44px;
+    border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  #lb-close:hover { background: rgba(255,255,255,0.2); }
+  .lb-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    border: none; color: #fff;
+    font-size: 1.6rem; width: 48px; height: 48px;
+    border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lb-arrow:hover { background: rgba(255,255,255,0.25); }
+  #lb-prev { left: 16px; }
+  #lb-next { right: 16px; }
+  #lb-counter {
+    position: absolute; bottom: 20px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.78rem;
+  }
 
-@media(max-width:480px) {
-  .gallery-grid { grid-template-columns: repeat(2,1fr); }
-  .profile-card { grid-template-columns:1fr; }
-  .hero h1 { font-size:1.8rem; }
-}
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.8rem; }
+    .profile-card { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
 </style>
 </head>
 <body>
@@ -267,29 +263,26 @@ footer {
 
 <div class="wrap">
 
-  <nav>
-    <div class="nav-brand">🐱 조애옹</div>
-  </nav>
+  <!-- NAV -->
+  <nav><span class="brand">🐱 조애옹</span></nav>
 
   <!-- HERO -->
   <div class="hero">
-    <span class="hero-emoji">🐱</span>
+    <span class="hero-emoji">🐾</span>
     <h1>조애옹의 세계에<br>오신 걸 환영합니다</h1>
-    <p class="sub">세상에서 제일 귀여운 고양이의 공식 홈페이지</p>
+    <p>세상에서 제일 귀여운 고양이, 조애옹의 공식 팬 홈페이지입니다.<br>조애옹의 일상과 사진을 여기서 만나보세요 🧡</p>
   </div>
 
   <!-- PROFILE -->
-  <div class="sec">
-    <div class="sec-head">
-      <h2>🪪 프로필</h2>
-    </div>
+  <div class="section">
+    <div class="section-title">😸 조애옹 프로필</div>
     <div class="profile-card">
       <div class="profile-item">
         <span class="profile-label">이름</span>
         <span class="profile-value">조애옹</span>
       </div>
       <div class="profile-item">
-        <span class="profile-label">품종</span>
+        <span class="profile-label">종류</span>
         <span class="profile-value">???</span>
       </div>
       <div class="profile-item">
@@ -297,66 +290,61 @@ footer {
         <span class="profile-value">귀여운 짓</span>
       </div>
       <div class="profile-item">
-        <span class="profile-label">싫어하는 것</span>
-        <span class="profile-value">목욕 😾</span>
-      </div>
-      <div class="profile-item full">
         <span class="profile-label">좋아하는 것</span>
-        <span class="profile-value">간식 🍗 · 낮잠 😴 · 햇볕 ☀️</span>
+        <span class="profile-value">간식 · 낮잠 · 햇볕</span>
+      </div>
+      <div class="profile-item">
+        <span class="profile-label">싫어하는 것</span>
+        <span class="profile-value">목욕 😤</span>
+      </div>
+      <div class="profile-item">
+        <span class="profile-label">좌우명</span>
+        <span class="profile-value">냥냥냥</span>
       </div>
     </div>
   </div>
 
   <!-- GALLERY -->
-  <div class="sec">
-    <div class="sec-head">
-      <h2>📷 갤러리</h2>
-    </div>
+  <div class="section">
+    <div class="section-title">📸 갤러리</div>
     <div class="gallery-grid" id="gallery">
-      <div class="gallery-item" data-src="" data-alt="조애옹 사진 1">
-        <div class="gallery-placeholder">🐾</div>
-        <div class="gallery-placeholder-text">사진 준비 중</div>
-        <div class="gallery-zoom-hint">🔍</div>
+      <div class="gallery-item" data-src="">
+        <span class="gallery-placeholder">🐱</span>
+        <span class="gallery-placeholder-text">사진 준비 중 🐾</span>
       </div>
-      <div class="gallery-item" data-src="" data-alt="조애옹 사진 2">
-        <div class="gallery-placeholder">🐾</div>
-        <div class="gallery-placeholder-text">사진 준비 중</div>
-        <div class="gallery-zoom-hint">🔍</div>
+      <div class="gallery-item" data-src="">
+        <span class="gallery-placeholder">😸</span>
+        <span class="gallery-placeholder-text">사진 준비 중 🐾</span>
       </div>
-      <div class="gallery-item" data-src="" data-alt="조애옹 사진 3">
-        <div class="gallery-placeholder">🐾</div>
-        <div class="gallery-placeholder-text">사진 준비 중</div>
-        <div class="gallery-zoom-hint">🔍</div>
+      <div class="gallery-item" data-src="">
+        <span class="gallery-placeholder">🙀</span>
+        <span class="gallery-placeholder-text">사진 준비 중 🐾</span>
       </div>
-      <div class="gallery-item" data-src="" data-alt="조애옹 사진 4">
-        <div class="gallery-placeholder">🐾</div>
-        <div class="gallery-placeholder-text">사진 준비 중</div>
-        <div class="gallery-zoom-hint">🔍</div>
+      <div class="gallery-item" data-src="">
+        <span class="gallery-placeholder">😻</span>
+        <span class="gallery-placeholder-text">사진 준비 중 🐾</span>
       </div>
-      <div class="gallery-item" data-src="" data-alt="조애옹 사진 5">
-        <div class="gallery-placeholder">🐾</div>
-        <div class="gallery-placeholder-text">사진 준비 중</div>
-        <div class="gallery-zoom-hint">🔍</div>
+      <div class="gallery-item" data-src="">
+        <span class="gallery-placeholder">🐈</span>
+        <span class="gallery-placeholder-text">사진 준비 중 🐾</span>
       </div>
-      <div class="gallery-item" data-src="" data-alt="조애옹 사진 6">
-        <div class="gallery-placeholder">🐾</div>
-        <div class="gallery-placeholder-text">사진 준비 중</div>
-        <div class="gallery-zoom-hint">🔍</div>
+      <div class="gallery-item" data-src="">
+        <span class="gallery-placeholder">🐾</span>
+        <span class="gallery-placeholder-text">사진 준비 중 🐾</span>
       </div>
     </div>
   </div>
 
   <!-- GUESTBOOK -->
-  <div class="sec">
-    <div class="sec-head">
-      <h2>💌 방명록</h2>
-    </div>
+  <div class="section">
+    <div class="section-title">💌 방명록</div>
     <div class="guestbook-box">
-      <p>조애옹에게 응원 메시지를 남겨주세요 🐱<br>모든 댓글은 조애옹이 직접 읽습니다 (물론 못 읽겠지만)</p>
-      <a href="https://t.me/fireantico" target="_blank" class="btn">텔레그램으로 메시지 보내기 →</a>
+      <p>조애옹에게 응원 메시지를 남겨주세요!<br>조애옹이 읽을 수도 있어요 (아마도 🐾)</p>
+      <a href="https://open.kakao.com/o/joaeong" class="btn" style="pointer-events:none; opacity:0.4;">준비 중 🧡</a>
     </div>
   </div>
 
+  <!-- FOOTER -->
   <footer>
     <p>Made with 🧡 for 조애옹</p>
     <p style="margin-top:6px;">© 2026 조애옹 팬클럽</p>
@@ -365,119 +353,102 @@ footer {
 </div>
 
 <!-- LIGHTBOX -->
-<div id="lb-overlay" role="dialog" aria-modal="true">
-  <button id="lb-close" aria-label="닫기">×</button>
-  <button id="lb-prev" aria-label="이전">‹</button>
-  <img id="lb-img" src="" alt="" style="display:none;">
-  <div id="lb-ph" class="lb-placeholder"><span>🐾</span><span>사진 준비 중</span></div>
-  <button id="lb-next" aria-label="다음">›</button>
+<div id="lb-overlay">
+  <button id="lb-close">✕</button>
+  <button class="lb-arrow" id="lb-prev">‹</button>
+  <img id="lb-img" src="" alt="조애옹">
+  <button class="lb-arrow" id="lb-next">›</button>
   <div id="lb-counter"></div>
 </div>
 
 <script>
-// ── 발바닥 파티클 ──────────────────────────────────────────
-(function(){
+// ── 발바닥 파티클 ──
+(function() {
   var c = document.getElementById('paws');
   var ctx = c.getContext('2d');
-  var W, H, paws = [];
-  function resize(){ W=c.width=window.innerWidth; H=c.height=window.innerHeight; }
+  var W, H, particles = [];
+  function resize() { W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
   resize(); window.addEventListener('resize', resize);
-
-  function spawnPaw(){
-    paws.push({
-      x: Math.random()*W, y: -30,
-      size: 12 + Math.random()*18,
-      speed: 0.4 + Math.random()*0.8,
+  for (var i = 0; i < 18; i++) {
+    particles.push({
+      x: Math.random()*W, y: Math.random()*H,
+      size: 10 + Math.random()*16,
+      speed: 0.3 + Math.random()*0.5,
       opacity: 0.3 + Math.random()*0.5,
-      rot: (Math.random()-0.5)*0.6
+      emoji: ['🐾','🐱','✨'][Math.floor(Math.random()*3)]
     });
   }
-
-  function drawPaw(ctx, x, y, size, rot, opacity){
-    ctx.save();
-    ctx.globalAlpha = opacity;
-    ctx.translate(x, y);
-    ctx.rotate(rot);
-    ctx.font = size+'px serif';
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.fillText('🐾', 0, 0);
-    ctx.restore();
-  }
-
-  var frame=0;
-  function loop(){
+  function draw() {
     ctx.clearRect(0,0,W,H);
-    if(frame++%120===0) spawnPaw();
-    paws = paws.filter(function(p){ return p.y < H+40; });
-    paws.forEach(function(p){
-      p.y += p.speed;
-      drawPaw(ctx, p.x, p.y, p.size, p.rot, p.opacity);
+    particles.forEach(function(p) {
+      ctx.font = p.size + 'px serif';
+      ctx.globalAlpha = p.opacity;
+      ctx.fillText(p.emoji, p.x, p.y);
+      p.y -= p.speed;
+      if (p.y < -40) { p.y = H + 20; p.x = Math.random()*W; }
     });
-    requestAnimationFrame(loop);
+    requestAnimationFrame(draw);
   }
-  loop();
+  draw();
 })();
 
-// ── 라이트박스 ──────────────────────────────────────────────
-(function(){
-  var items = Array.from(document.querySelectorAll('.gallery-item'));
-  var overlay  = document.getElementById('lb-overlay');
-  var lbImg    = document.getElementById('lb-img');
-  var lbPh     = document.getElementById('lb-ph');
-  var lbPrev   = document.getElementById('lb-prev');
-  var lbNext   = document.getElementById('lb-next');
-  var lbClose  = document.getElementById('lb-close');
-  var lbCounter= document.getElementById('lb-counter');
-  var current  = 0;
+// ── 라이트박스 ──
+(function() {
+  var overlay = document.getElementById('lb-overlay');
+  var lbImg   = document.getElementById('lb-img');
+  var lbPrev  = document.getElementById('lb-prev');
+  var lbNext  = document.getElementById('lb-next');
+  var lbClose = document.getElementById('lb-close');
+  var lbCounter = document.getElementById('lb-counter');
+  var images = [], cur = 0;
 
-  function show(i){
-    current = i;
-    var item = items[i];
-    var src  = item.dataset.src;
-    if(src){
-      lbImg.src = src;
-      lbImg.alt = item.dataset.alt || '';
-      lbImg.style.display = 'block';
-      lbPh.style.display  = 'none';
-    } else {
-      lbImg.style.display = 'none';
-      lbPh.style.display  = 'flex';
-    }
-    lbCounter.textContent = (i+1) + ' / ' + items.length;
-    overlay.classList.add('active');
+  function open(idx) {
+    images = [];
+    document.querySelectorAll('.gallery-item').forEach(function(el) {
+      var src = el.dataset.src;
+      var img = el.querySelector('img');
+      if (img) src = img.src;
+      if (src) images.push(src);
+    });
+    if (!images.length) return;
+    cur = idx < images.length ? idx : 0;
+    show();
+    overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 
-  function close(){
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
+  function show() {
+    lbImg.src = images[cur];
+    lbCounter.textContent = (cur+1) + ' / ' + images.length;
+    lbPrev.style.display = images.length > 1 ? '' : 'none';
+    lbNext.style.display = images.length > 1 ? '' : 'none';
   }
 
-  items.forEach(function(item, i){
-    item.addEventListener('click', function(){ show(i); });
-  });
+  function close() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
 
   lbClose.addEventListener('click', close);
-  overlay.addEventListener('click', function(e){ if(e.target===overlay) close(); });
-  lbPrev.addEventListener('click', function(e){ e.stopPropagation(); show((current-1+items.length)%items.length); });
-  lbNext.addEventListener('click', function(e){ e.stopPropagation(); show((current+1)%items.length); });
-
-  document.addEventListener('keydown', function(e){
-    if(!overlay.classList.contains('active')) return;
-    if(e.key==='Escape') close();
-    if(e.key==='ArrowLeft')  show((current-1+items.length)%items.length);
-    if(e.key==='ArrowRight') show((current+1)%items.length);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
+  lbPrev.addEventListener('click', function(e) { e.stopPropagation(); cur = (cur-1+images.length)%images.length; show(); });
+  lbNext.addEventListener('click', function(e) { e.stopPropagation(); cur = (cur+1)%images.length; show(); });
+  document.addEventListener('keydown', function(e) {
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') { cur = (cur-1+images.length)%images.length; show(); }
+    if (e.key === 'ArrowRight') { cur = (cur+1)%images.length; show(); }
   });
 
-  // 모바일 스와이프
-  var touchStartX = 0;
-  overlay.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; });
-  overlay.addEventListener('touchend',   function(e){
-    var dx = e.changedTouches[0].clientX - touchStartX;
-    if(Math.abs(dx) > 50){
-      if(dx > 0) show((current-1+items.length)%items.length);
-      else show((current+1)%items.length);
-    }
+  // 갤러리 클릭 바인딩
+  document.querySelectorAll('.gallery-item').forEach(function(el, i) {
+    el.addEventListener('click', function() {
+      var src = el.dataset.src;
+      var img = el.querySelector('img');
+      if (img) src = img.src;
+      if (src) open(i);
+    });
   });
 })();
 </script>
