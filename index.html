@@ -1,872 +1,485 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🐱 조애옹</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #1a1510;
-      --surface: #2a2018;
-      --surface2: #352a1e;
-      --text: #f0e6d3;
-      --text-muted: #a89880;
-      --accent: #e8823a;
-      --accent-soft: #f0a860;
-      --accent-pale: #3d2a18;
-      --border: #4a3828;
-      --paw: rgba(232, 130, 58, 0.15);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Noto Sans KR', sans-serif;
-      font-weight: 300;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* ── Paw Canvas ── */
-    #paw-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.4;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.8rem 2rem;
-      background: rgba(26, 21, 16, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-brand {
-      font-family: 'Gamja Flower', cursive;
-      font-size: 1.6rem;
-      color: var(--accent-soft);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent-soft);
-    }
-
-    /* ── HERO ── */
-    #hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 1.5rem 3rem;
-      z-index: 1;
-    }
-
-    .hero-emoji {
-      font-size: clamp(5rem, 15vw, 9rem);
-      line-height: 1;
-      animation: float 4s ease-in-out infinite;
-      filter: drop-shadow(0 0 24px rgba(232, 130, 58, 0.4));
-      margin-bottom: 1.5rem;
-      display: block;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-18px); }
-    }
-
-    .hero-title {
-      font-family: 'Gamja Flower', cursive;
-      font-size: clamp(2.2rem, 7vw, 4.5rem);
-      color: var(--accent-soft);
-      line-height: 1.2;
-      margin-bottom: 1rem;
-      text-shadow: 0 0 40px rgba(232, 130, 58, 0.3);
-    }
-
-    .hero-sub {
-      font-size: 1rem;
-      color: var(--text-muted);
-      max-width: 480px;
-      margin: 0 auto 2.5rem;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: var(--accent-pale);
-      border: 1px solid var(--border);
-      color: var(--accent-soft);
-      padding: 0.45rem 1.2rem;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      animation: bounce 2s ease-in-out infinite;
-    }
-
-    .scroll-hint span { font-size: 1.2rem; }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(8px); }
-    }
-
-    /* ── SECTION WRAPPER ── */
-    section {
-      position: relative;
-      z-index: 1;
-      padding: 5rem 1.5rem;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-family: 'Gamja Flower', cursive;
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      color: var(--accent-soft);
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-divider {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      justify-content: center;
-      margin-bottom: 3rem;
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    .section-divider::before,
-    .section-divider::after {
-      content: '';
-      flex: 1;
-      max-width: 80px;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── PROFILE ── */
-    #profile {
-      background: linear-gradient(180deg, transparent, var(--surface) 20%, var(--surface) 80%, transparent);
-    }
-
-    .profile-card {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      max-width: 540px;
-      margin: 0 auto;
-      box-shadow: 0 4px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .profile-card::before {
-      content: '';
-      position: absolute;
-      top: -40px;
-      right: -40px;
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, rgba(232, 130, 58, 0.12), transparent 70%);
-      border-radius: 50%;
-    }
-
-    .profile-avatar {
-      font-size: 4.5rem;
-      text-align: center;
-      margin-bottom: 1rem;
-      filter: drop-shadow(0 2px 8px rgba(232, 130, 58, 0.3));
-    }
-
-    .profile-name {
-      font-family: 'Gamja Flower', cursive;
-      font-size: 2rem;
-      color: var(--accent-soft);
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .profile-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .profile-table tr {
-      border-bottom: 1px solid var(--border);
-    }
-
-    .profile-table tr:last-child {
-      border-bottom: none;
-    }
-
-    .profile-table td {
-      padding: 0.75rem 0.5rem;
-      vertical-align: top;
-    }
-
-    .profile-table td:first-child {
-      color: var(--text-muted);
-      font-size: 0.82rem;
-      white-space: nowrap;
-      padding-right: 1rem;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
-
-    .profile-table td:last-child {
-      color: var(--text);
-      font-size: 0.95rem;
-    }
-
-    .tag {
-      display: inline-block;
-      background: var(--accent-pale);
-      color: var(--accent-soft);
-      border-radius: 999px;
-      padding: 0.15rem 0.65rem;
-      font-size: 0.82rem;
-      margin: 0.15rem 0.15rem 0.15rem 0;
-    }
-
-    .tag.dislike {
-      background: rgba(100, 50, 30, 0.4);
-      color: #d4997a;
-    }
-
-    /* ── GALLERY ── */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .gallery-card {
-      position: relative;
-      aspect-ratio: 1;
-      border-radius: 16px;
-      overflow: hidden;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: transform 0.25s, box-shadow 0.25s;
-    }
-
-    .gallery-card:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px var(--accent);
-    }
-
-    .gallery-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .gallery-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .gallery-placeholder .paw-icon {
-      font-size: 2.8rem;
-      animation: pulse 2.5s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.5; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.1); }
-    }
-
-    .gallery-placeholder p {
-      font-size: 0.85rem;
-      text-align: center;
-      padding: 0 0.5rem;
-    }
-
-    .gallery-overlay-icon {
-      position: absolute;
-      top: 0.6rem;
-      right: 0.6rem;
-      background: rgba(0,0,0,0.55);
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .gallery-card:hover .gallery-overlay-icon {
-      opacity: 1;
-    }
-
-    /* ── LIGHTBOX ── */
-    #lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    #lightbox.active {
-      display: flex;
-    }
-
-    .lb-inner {
-      position: relative;
-      max-width: min(90vw, 700px);
-      max-height: 80vh;
-    }
-
-    #lb-img {
-      max-width: 100%;
-      max-height: 78vh;
-      border-radius: 12px;
-      box-shadow: 0 0 60px rgba(0,0,0,0.8);
-      object-fit: contain;
-    }
-
-    #lb-placeholder {
-      width: min(80vw, 480px);
-      height: min(70vw, 380px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      background: var(--surface2);
-      border-radius: 16px;
-      border: 2px dashed var(--border);
-      color: var(--text-muted);
-    }
-
-    #lb-placeholder .paw-big { font-size: 4rem; }
-
-    .lb-btn {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: white;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      z-index: 1001;
-    }
-
-    .lb-btn:hover { background: rgba(255,255,255,0.18); }
-    #lb-prev { left: 1rem; }
-    #lb-next { right: 1rem; }
-
-    #lb-close {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      z-index: 1001;
-    }
-
-    #lb-close:hover { background: rgba(255,50,50,0.3); }
-
-    #lb-caption {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    #lb-counter {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-    }
-
-    /* ── GUESTBOOK ── */
-    #guestbook {
-      background: linear-gradient(180deg, transparent, var(--surface) 20%, var(--surface) 80%, transparent);
-    }
-
-    .guestbook-inner {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .guestbook-msg {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      line-height: 1.9;
-    }
-
-    .guestbook-msg strong {
-      color: var(--accent-soft);
-    }
-
-    .guestbook-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.7rem 1.6rem;
-      border-radius: 999px;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-soft);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(232, 130, 58, 0.4);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--accent-soft);
-      border: 1px solid var(--border);
-    }
-
-    .btn-outline:hover {
-      background: var(--accent-pale);
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 2.5rem 1.5rem;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      border-top: 1px solid var(--border);
-    }
-
-    footer span {
-      color: var(--accent);
-    }
-
-    /* ── MOBILE ── */
-    @media (max-width: 600px) {
-      nav { padding: 0.7rem 1rem; }
-      .nav-links { gap: 1rem; }
-      .nav-links a { font-size: 0.82rem; }
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
-      #lb-prev { left: 0.3rem; }
-      #lb-next { right: 0.3rem; }
-    }
-
-    /* ── Scroll Fade ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐱 조애옹</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1008;
+  --surface: rgba(255,200,120,0.07);
+  --surface-hover: rgba(255,200,120,0.13);
+  --border: rgba(255,180,80,0.15);
+  --border-hover: rgba(255,150,50,0.45);
+  --accent: #FF9940;
+  --accent2: #FFD08A;
+  --text: #F5ECD7;
+  --text-dim: #B09070;
+  --text-muted: #6B5035;
+  --glow: rgba(255,140,50,0.18);
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* 발바닥 파티클 캔버스 */
+canvas#paws {
+  position: fixed; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none; z-index:0;
+  opacity: 0.18;
+}
+
+.wrap {
+  position: relative; z-index:1;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky; top:0; z-index:10;
+  display: flex; align-items:center; justify-content:center;
+  padding: 14px 20px;
+  background: rgba(26,16,8,0.88);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand {
+  font-family: 'Gamja Flower', sans-serif;
+  font-size: 1.4rem;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 52px 0 36px;
+}
+.hero-emoji {
+  font-size: 5rem;
+  display: block;
+  margin-bottom: 16px;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.hero h1 {
+  font-family: 'Gamja Flower', sans-serif;
+  font-size: 2.4rem;
+  color: var(--accent2);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.hero .sub {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+/* ── SECTION HEAD ── */
+.sec { margin-top: 40px; }
+.sec-head {
+  display: flex; align-items:center; gap:8px;
+  margin-bottom: 16px;
+}
+.sec-head h2 {
+  font-family: 'Gamja Flower', sans-serif;
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+/* ── PROFILE CARD ── */
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.profile-item { display:flex; flex-direction:column; gap:4px; }
+.profile-label {
+  font-size: 0.7rem; font-weight:700;
+  color: var(--text-muted); text-transform:uppercase; letter-spacing:0.08em;
+}
+.profile-value {
+  font-size: 0.92rem; font-weight:600;
+  color: var(--text);
+}
+.profile-item.full { grid-column: 1/-1; }
+
+/* ── GALLERY ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.gallery-item {
+  aspect-ratio: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:6px;
+  cursor: pointer;
+  transition: all 0.25s;
+  overflow: hidden;
+  position: relative;
+}
+.gallery-item:hover {
+  border-color: var(--border-hover);
+  background: var(--surface-hover);
+  transform: scale(1.02);
+}
+.gallery-item img {
+  width:100%; height:100%;
+  object-fit:cover;
+  border-radius: calc(var(--radius-sm) - 1px);
+}
+.gallery-placeholder {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+.gallery-placeholder-text {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+.gallery-zoom-hint {
+  position:absolute; inset:0;
+  background: rgba(255,153,64,0.0);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.4rem; opacity:0;
+  transition: all 0.2s;
+  border-radius: calc(var(--radius-sm) - 1px);
+}
+.gallery-item:hover .gallery-zoom-hint { opacity:1; background: rgba(26,16,8,0.45); }
+
+/* ── GUESTBOOK ── */
+.guestbook-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+}
+.guestbook-box p {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--accent), #E07820);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 0.85rem; font-weight:700;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.btn:hover { opacity:0.85; }
+
+/* ── FOOTER ── */
+footer {
+  text-align:center;
+  margin-top:52px; padding-top:20px;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ── LIGHTBOX ── */
+#lb-overlay {
+  display:none;
+  position:fixed; inset:0;
+  background: rgba(0,0,0,0.88);
+  z-index:1000;
+  align-items:center; justify-content:center;
+}
+#lb-overlay.active { display:flex; }
+#lb-img {
+  max-width:90vw; max-height:85vh;
+  border-radius: 12px;
+  object-fit: contain;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+}
+.lb-placeholder {
+  width:320px; height:320px;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:12px;
+  background: var(--surface);
+  border-radius:12px;
+  font-size:3rem;
+  color: var(--text-dim);
+}
+.lb-placeholder span { font-size:0.9rem; }
+#lb-close {
+  position:absolute; top:20px; right:24px;
+  background:none; border:none;
+  color:#fff; font-size:2rem; cursor:pointer;
+  opacity:0.7; transition:opacity 0.2s;
+}
+#lb-close:hover { opacity:1; }
+#lb-prev, #lb-next {
+  position:absolute; top:50%; transform:translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border:none; color:#fff;
+  font-size:1.8rem; cursor:pointer;
+  width:48px; height:48px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  transition: background 0.2s;
+}
+#lb-prev { left:20px; }
+#lb-next { right:20px; }
+#lb-prev:hover, #lb-next:hover { background: rgba(255,255,255,0.25); }
+#lb-counter {
+  position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+  color:rgba(255,255,255,0.5); font-size:0.78rem;
+}
+
+@media(max-width:480px) {
+  .gallery-grid { grid-template-columns: repeat(2,1fr); }
+  .profile-card { grid-template-columns:1fr; }
+  .hero h1 { font-size:1.8rem; }
+}
+</style>
 </head>
 <body>
 
-<!-- Paw canvas background -->
-<canvas id="paw-canvas"></canvas>
+<canvas id="paws"></canvas>
 
-<!-- ─── NAV ─── -->
-<nav>
-  <a class="nav-brand" href="#">🐱 조애옹</a>
-  <ul class="nav-links">
-    <li><a href="#profile">프로필</a></li>
-    <li><a href="#gallery">갤러리</a></li>
-    <li><a href="#guestbook">방명록</a></li>
-  </ul>
-</nav>
+<div class="wrap">
 
-<!-- ─── HERO ─── -->
-<section id="hero">
-  <span class="hero-emoji">🐱</span>
-  <h1 class="hero-title">조애옹의 세계에<br>오신 걸 환영합니다</h1>
-  <p class="hero-sub">세상에서 가장 귀여운 고양이, 조애옹의 팬 페이지입니다.<br>사랑스러운 일상을 함께 나눠요 🧡</p>
-  <div class="hero-badge">✨ 조애옹을 사랑하는 공간 ✨</div>
-  <div class="scroll-hint"><span>↓</span>더 보기</div>
-</section>
+  <nav>
+    <div class="nav-brand">🐱 조애옹</div>
+  </nav>
 
-<!-- ─── PROFILE ─── -->
-<section id="profile">
-  <div class="container">
-    <h2 class="section-title reveal">고양이 소개</h2>
-    <div class="section-divider reveal">🐾</div>
-    <div class="profile-card reveal">
-      <div class="profile-avatar">😺</div>
-      <p class="profile-name">조애옹</p>
-      <table class="profile-table">
-        <tr>
-          <td>이름</td>
-          <td>조애옹</td>
-        </tr>
-        <tr>
-          <td>종류</td>
-          <td><span class="tag">??? (미정)</span></td>
-        </tr>
-        <tr>
-          <td>특기</td>
-          <td>귀여운 짓 🥰</td>
-        </tr>
-        <tr>
-          <td>좋아하는 것</td>
-          <td>
-            <span class="tag">🍗 간식</span>
-            <span class="tag">😴 낮잠</span>
-            <span class="tag">☀️ 햇볕</span>
-          </td>
-        </tr>
-        <tr>
-          <td>싫어하는 것</td>
-          <td><span class="tag dislike">🛁 목욕</span></td>
-        </tr>
-      </table>
-    </div>
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-emoji">🐱</span>
+    <h1>조애옹의 세계에<br>오신 걸 환영합니다</h1>
+    <p class="sub">세상에서 제일 귀여운 고양이의 공식 홈페이지</p>
   </div>
-</section>
 
-<!-- ─── GALLERY ─── -->
-<section id="gallery">
-  <div class="container">
-    <h2 class="section-title reveal">갤러리</h2>
-    <div class="section-divider reveal">📷</div>
-    <div class="gallery-grid reveal" id="gallery-grid">
-      <!-- Cards injected by JS -->
+  <!-- PROFILE -->
+  <div class="sec">
+    <div class="sec-head">
+      <h2>🪪 프로필</h2>
     </div>
-  </div>
-</section>
-
-<!-- ─── LIGHTBOX ─── -->
-<div id="lightbox" role="dialog" aria-modal="true" aria-label="이미지 뷰어">
-  <button id="lb-close" aria-label="닫기">✕</button>
-  <button class="lb-btn" id="lb-prev" aria-label="이전">←</button>
-  <div class="lb-inner">
-    <img id="lb-img" src="" alt="" style="display:none" />
-    <div id="lb-placeholder">
-      <span class="paw-big">🐾</span>
-      <p>사진 준비 중이에요</p>
-      <small>곧 조애옹의 사진이 채워질 거예요 🧡</small>
-    </div>
-    <p id="lb-caption"></p>
-  </div>
-  <button class="lb-btn" id="lb-next" aria-label="다음">→</button>
-  <p id="lb-counter"></p>
-</div>
-
-<!-- ─── GUESTBOOK ─── -->
-<section id="guestbook">
-  <div class="container">
-    <h2 class="section-title reveal">방명록</h2>
-    <div class="section-divider reveal">💌</div>
-    <div class="guestbook-inner reveal">
-      <p class="guestbook-msg">
-        조애옹을 사랑해 주셔서 감사합니다! 🧡<br>
-        조애옹을 보고 기분이 좋아지셨나요?<br>
-        <strong>애정 어린 메시지</strong>를 남겨 주시면 조애옹이 행복해할 거예요.
-      </p>
-      <div class="guestbook-buttons">
-        <a class="btn btn-primary" href="https://open.kakao.com/o/example" target="_blank" rel="noopener">💬 카카오톡으로 응원하기</a>
-        <a class="btn btn-outline" href="https://twitter.com/intent/tweet?text=조애옹+너무+귀엽다+🐱&url=https://josoyjjk-ui.github.io/joaeong/" target="_blank" rel="noopener">🐦 트위터에 공유하기</a>
+    <div class="profile-card">
+      <div class="profile-item">
+        <span class="profile-label">이름</span>
+        <span class="profile-value">조애옹</span>
+      </div>
+      <div class="profile-item">
+        <span class="profile-label">품종</span>
+        <span class="profile-value">???</span>
+      </div>
+      <div class="profile-item">
+        <span class="profile-label">특기</span>
+        <span class="profile-value">귀여운 짓</span>
+      </div>
+      <div class="profile-item">
+        <span class="profile-label">싫어하는 것</span>
+        <span class="profile-value">목욕 😾</span>
+      </div>
+      <div class="profile-item full">
+        <span class="profile-label">좋아하는 것</span>
+        <span class="profile-value">간식 🍗 · 낮잠 😴 · 햇볕 ☀️</span>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ─── FOOTER ─── -->
-<footer>
-  <p>Made with <span>🧡</span> for 조애옹 &nbsp;·&nbsp; 2025</p>
-  <p style="margin-top:0.3rem; font-size:0.78rem;">이 페이지는 조애옹의 팬들이 만든 비공식 팬 사이트입니다.</p>
-</footer>
+  <!-- GALLERY -->
+  <div class="sec">
+    <div class="sec-head">
+      <h2>📷 갤러리</h2>
+    </div>
+    <div class="gallery-grid" id="gallery">
+      <div class="gallery-item" data-src="" data-alt="조애옹 사진 1">
+        <div class="gallery-placeholder">🐾</div>
+        <div class="gallery-placeholder-text">사진 준비 중</div>
+        <div class="gallery-zoom-hint">🔍</div>
+      </div>
+      <div class="gallery-item" data-src="" data-alt="조애옹 사진 2">
+        <div class="gallery-placeholder">🐾</div>
+        <div class="gallery-placeholder-text">사진 준비 중</div>
+        <div class="gallery-zoom-hint">🔍</div>
+      </div>
+      <div class="gallery-item" data-src="" data-alt="조애옹 사진 3">
+        <div class="gallery-placeholder">🐾</div>
+        <div class="gallery-placeholder-text">사진 준비 중</div>
+        <div class="gallery-zoom-hint">🔍</div>
+      </div>
+      <div class="gallery-item" data-src="" data-alt="조애옹 사진 4">
+        <div class="gallery-placeholder">🐾</div>
+        <div class="gallery-placeholder-text">사진 준비 중</div>
+        <div class="gallery-zoom-hint">🔍</div>
+      </div>
+      <div class="gallery-item" data-src="" data-alt="조애옹 사진 5">
+        <div class="gallery-placeholder">🐾</div>
+        <div class="gallery-placeholder-text">사진 준비 중</div>
+        <div class="gallery-zoom-hint">🔍</div>
+      </div>
+      <div class="gallery-item" data-src="" data-alt="조애옹 사진 6">
+        <div class="gallery-placeholder">🐾</div>
+        <div class="gallery-placeholder-text">사진 준비 중</div>
+        <div class="gallery-zoom-hint">🔍</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUESTBOOK -->
+  <div class="sec">
+    <div class="sec-head">
+      <h2>💌 방명록</h2>
+    </div>
+    <div class="guestbook-box">
+      <p>조애옹에게 응원 메시지를 남겨주세요 🐱<br>모든 댓글은 조애옹이 직접 읽습니다 (물론 못 읽겠지만)</p>
+      <a href="https://t.me/fireantico" target="_blank" class="btn">텔레그램으로 메시지 보내기 →</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with 🧡 for 조애옹</p>
+    <p style="margin-top:6px;">© 2026 조애옹 팬클럽</p>
+  </footer>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lb-overlay" role="dialog" aria-modal="true">
+  <button id="lb-close" aria-label="닫기">×</button>
+  <button id="lb-prev" aria-label="이전">‹</button>
+  <img id="lb-img" src="" alt="" style="display:none;">
+  <div id="lb-ph" class="lb-placeholder"><span>🐾</span><span>사진 준비 중</span></div>
+  <button id="lb-next" aria-label="다음">›</button>
+  <div id="lb-counter"></div>
+</div>
 
 <script>
-/* ════════════════════════════════════════
-   PAW PARTICLE CANVAS
-════════════════════════════════════════ */
-(function() {
-  const canvas = document.getElementById('paw-canvas');
-  const ctx = canvas.getContext('2d');
-  const paws = [];
-  const PAW_COUNT = 18;
+// ── 발바닥 파티클 ──────────────────────────────────────────
+(function(){
+  var c = document.getElementById('paws');
+  var ctx = c.getContext('2d');
+  var W, H, paws = [];
+  function resize(){ W=c.width=window.innerWidth; H=c.height=window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
 
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  function randBetween(a, b) { return a + Math.random() * (b - a); }
-
-  function createPaw() {
-    return {
-      x: randBetween(0, canvas.width),
-      y: randBetween(-100, canvas.height),
-      size: randBetween(14, 38),
-      speedY: randBetween(0.25, 0.75),
-      speedX: randBetween(-0.3, 0.3),
-      opacity: randBetween(0.04, 0.18),
-      angle: randBetween(0, Math.PI * 2),
-      spin: randBetween(-0.005, 0.005),
-    };
+  function spawnPaw(){
+    paws.push({
+      x: Math.random()*W, y: -30,
+      size: 12 + Math.random()*18,
+      speed: 0.4 + Math.random()*0.8,
+      opacity: 0.3 + Math.random()*0.5,
+      rot: (Math.random()-0.5)*0.6
+    });
   }
 
-  function drawPaw(p) {
+  function drawPaw(ctx, x, y, size, rot, opacity){
     ctx.save();
-    ctx.translate(p.x, p.y);
-    ctx.rotate(p.angle);
-    ctx.globalAlpha = p.opacity;
-    ctx.font = `${p.size}px serif`;
-    ctx.fillText('🐾', -p.size/2, p.size/2);
+    ctx.globalAlpha = opacity;
+    ctx.translate(x, y);
+    ctx.rotate(rot);
+    ctx.font = size+'px serif';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('🐾', 0, 0);
     ctx.restore();
   }
 
-  for (let i = 0; i < PAW_COUNT; i++) paws.push(createPaw());
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    paws.forEach(p => {
-      drawPaw(p);
-      p.y += p.speedY;
-      p.x += p.speedX;
-      p.angle += p.spin;
-      if (p.y > canvas.height + 50) {
-        Object.assign(p, createPaw());
-        p.y = -50;
-      }
+  var frame=0;
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    if(frame++%120===0) spawnPaw();
+    paws = paws.filter(function(p){ return p.y < H+40; });
+    paws.forEach(function(p){
+      p.y += p.speed;
+      drawPaw(ctx, p.x, p.y, p.size, p.rot, p.opacity);
     });
-    requestAnimationFrame(animate);
+    requestAnimationFrame(loop);
   }
-  animate();
+  loop();
 })();
 
-/* ════════════════════════════════════════
-   GALLERY BUILD
-════════════════════════════════════════ */
-const galleryData = [
-  { src: '', caption: '조애옹 #1' },
-  { src: '', caption: '조애옹 #2' },
-  { src: '', caption: '조애옹 #3' },
-  { src: '', caption: '조애옹 #4' },
-  { src: '', caption: '조애옹 #5' },
-  { src: '', caption: '조애옹 #6' },
-];
+// ── 라이트박스 ──────────────────────────────────────────────
+(function(){
+  var items = Array.from(document.querySelectorAll('.gallery-item'));
+  var overlay  = document.getElementById('lb-overlay');
+  var lbImg    = document.getElementById('lb-img');
+  var lbPh     = document.getElementById('lb-ph');
+  var lbPrev   = document.getElementById('lb-prev');
+  var lbNext   = document.getElementById('lb-next');
+  var lbClose  = document.getElementById('lb-close');
+  var lbCounter= document.getElementById('lb-counter');
+  var current  = 0;
 
-const grid = document.getElementById('gallery-grid');
-galleryData.forEach((item, i) => {
-  const card = document.createElement('div');
-  card.className = 'gallery-card';
-  card.dataset.index = i;
-
-  if (item.src) {
-    const img = document.createElement('img');
-    img.src = item.src;
-    img.alt = item.caption;
-    img.loading = 'lazy';
-    card.appendChild(img);
-  } else {
-    card.innerHTML = `
-      <div class="gallery-placeholder">
-        <span class="paw-icon">🐾</span>
-        <p>사진 준비 중</p>
-      </div>`;
+  function show(i){
+    current = i;
+    var item = items[i];
+    var src  = item.dataset.src;
+    if(src){
+      lbImg.src = src;
+      lbImg.alt = item.dataset.alt || '';
+      lbImg.style.display = 'block';
+      lbPh.style.display  = 'none';
+    } else {
+      lbImg.style.display = 'none';
+      lbPh.style.display  = 'flex';
+    }
+    lbCounter.textContent = (i+1) + ' / ' + items.length;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 
-  const icon = document.createElement('div');
-  icon.className = 'gallery-overlay-icon';
-  icon.textContent = '🔍';
-  card.appendChild(icon);
-
-  card.addEventListener('click', () => openLightbox(i));
-  grid.appendChild(card);
-});
-
-/* ════════════════════════════════════════
-   LIGHTBOX
-════════════════════════════════════════ */
-let currentIdx = 0;
-const lb = document.getElementById('lightbox');
-const lbImg = document.getElementById('lb-img');
-const lbPlaceholder = document.getElementById('lb-placeholder');
-const lbCaption = document.getElementById('lb-caption');
-const lbCounter = document.getElementById('lb-counter');
-
-function openLightbox(idx) {
-  currentIdx = idx;
-  showLightboxItem();
-  lb.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-  lb.classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-function showLightboxItem() {
-  const item = galleryData[currentIdx];
-  lbCounter.textContent = `${currentIdx + 1} / ${galleryData.length}`;
-  lbCaption.textContent = item.caption;
-  if (item.src) {
-    lbImg.src = item.src;
-    lbImg.alt = item.caption;
-    lbImg.style.display = 'block';
-    lbPlaceholder.style.display = 'none';
-  } else {
-    lbImg.style.display = 'none';
-    lbPlaceholder.style.display = 'flex';
+  function close(){
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
   }
-}
 
-document.getElementById('lb-close').addEventListener('click', closeLightbox);
-document.getElementById('lb-prev').addEventListener('click', () => {
-  currentIdx = (currentIdx - 1 + galleryData.length) % galleryData.length;
-  showLightboxItem();
-});
-document.getElementById('lb-next').addEventListener('click', () => {
-  currentIdx = (currentIdx + 1) % galleryData.length;
-  showLightboxItem();
-});
-
-lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-
-document.addEventListener('keydown', e => {
-  if (!lb.classList.contains('active')) return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowLeft') { currentIdx = (currentIdx - 1 + galleryData.length) % galleryData.length; showLightboxItem(); }
-  if (e.key === 'ArrowRight') { currentIdx = (currentIdx + 1) % galleryData.length; showLightboxItem(); }
-});
-
-/* ════════════════════════════════════════
-   SCROLL REVEAL
-════════════════════════════════════════ */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  items.forEach(function(item, i){
+    item.addEventListener('click', function(){ show(i); });
   });
-}, { threshold: 0.12 });
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  lbClose.addEventListener('click', close);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) close(); });
+  lbPrev.addEventListener('click', function(e){ e.stopPropagation(); show((current-1+items.length)%items.length); });
+  lbNext.addEventListener('click', function(e){ e.stopPropagation(); show((current+1)%items.length); });
+
+  document.addEventListener('keydown', function(e){
+    if(!overlay.classList.contains('active')) return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowLeft')  show((current-1+items.length)%items.length);
+    if(e.key==='ArrowRight') show((current+1)%items.length);
+  });
+
+  // 모바일 스와이프
+  var touchStartX = 0;
+  overlay.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; });
+  overlay.addEventListener('touchend',   function(e){
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 50){
+      if(dx > 0) show((current-1+items.length)%items.length);
+      else show((current+1)%items.length);
+    }
+  });
+})();
 </script>
 </body>
 </html>
